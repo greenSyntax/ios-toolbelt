@@ -9,7 +9,21 @@
 import Foundation
 import JSONParserSwift
 
-class Person: ParsableModel {
+class Profile: ParsableModel {
+
+    var name: String?
+    var location: String?
+    var age: String?
+    var picture: String?
+    var website: String?
+}
+
+class Friends : ParsableModel {
+
+    var friends:[Friend]?
+}
+
+class Friend: ParsableModel {
 
     var name:String?
     var age:String?

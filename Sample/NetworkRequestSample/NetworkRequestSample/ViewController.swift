@@ -14,9 +14,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let api = ApiStruct(endpoint: URL(string: "http://api.greensyntax.co.in/sample.json"), headers: nil, body: nil)
+        let profileUrl = "http://api.greensyntax.co.in/profile.json"
+        let friendsUrl = "http://api.greensyntax.co.in/sample.json"
 
-        WSManager.shared.getResponse(api: api) { (response, error) in
+        let api = ApiStruct(endpoint: URL(string: friendsUrl), headers: nil, body: nil)
+
+        WSManager.shared.getResponse(api: api) { (response:Friends?, error) in
 
             print(response)
             

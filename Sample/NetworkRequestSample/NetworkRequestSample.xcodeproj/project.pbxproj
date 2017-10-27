@@ -68,13 +68,13 @@
 			isa = PBXGroup;
 			children = (
 				6D78830B1FA11FA0002B06C3 /* WSManager.swift */,
+				6D78830D1FA121BF002B06C3 /* JSONParser.swift */,
 				6D7882F91FA11F50002B06C3 /* AppDelegate.swift */,
 				6D7882FB1FA11F50002B06C3 /* ViewController.swift */,
 				6D7882FD1FA11F50002B06C3 /* Main.storyboard */,
 				6D7883001FA11F50002B06C3 /* Assets.xcassets */,
 				6D7883021FA11F50002B06C3 /* LaunchScreen.storyboard */,
 				6D7883051FA11F50002B06C3 /* Info.plist */,
-				6D78830D1FA121BF002B06C3 /* JSONParser.swift */,
 				6D78830F1FA12C5A002B06C3 /* Model.swift */,
 			);
 			path = NetworkRequestSample;

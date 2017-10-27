@@ -11,11 +11,10 @@ import JSONParserSwift
 
 class JSONParser {
 
-    static func parse(json: Data)->[Person]? {
+    static func parse<T:ParsableModel>(json: Data)->T? {
 
         do {
-
-            let baseResponse: [Person] = try JSONParserSwift.parse(data: json)
+            let baseResponse: T = try JSONParserSwift.parse(data: json)
             return baseResponse
         }
         catch {
