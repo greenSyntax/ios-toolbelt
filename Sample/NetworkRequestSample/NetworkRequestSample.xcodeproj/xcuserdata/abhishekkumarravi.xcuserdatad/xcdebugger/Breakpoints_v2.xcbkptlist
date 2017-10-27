@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NetworkRequestSample/ViewController.swift"
+            timestampString = "530658841.070316"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NetworkRequestSample.ViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "NetworkRequestSample"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/abhishekkumarravi/Documents/Github/ios-source/Sample/NetworkRequestSample/NetworkRequestSample/ViewController.swift"
+                  timestampString = "530658841.20854"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "744">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Any&gt;, Swift.Optional&lt;NetworkRequestSample.ErrorModel&gt;) -&gt; () in NetworkRequestSample.ViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "NetworkRequestSample"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/abhishekkumarravi/Documents/Github/ios-source/Sample/NetworkRequestSample/NetworkRequestSample/ViewController.swift"
+                  timestampString = "530658841.210289"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "340">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
