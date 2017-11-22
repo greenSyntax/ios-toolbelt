@@ -1,0 +1,6 @@
+framework module JSONParserSwift {
+  umbrella header "JSONParserSwift-umbrella.h"
+
+  export *
+  module * { export * }
+}
