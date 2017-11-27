@@ -23,6 +23,22 @@ LocalAuthentication.authenticate { (hasAuthenticated, error) in
 When You're authenticating user, then there must be errors. Like, User Cancel the the Dialog for Authentication PopUp or Authentication failed due to wrong passphrase/biometric.
 Each and Every Cases are handled in AuthenticationError.
 
+1. AppCancel
+   - Authentication was canceled by application (e.g. invalidate was called while
+     authentication was in progress). 
+2. Authentication failed
+   - Authentication was not successful, because user failed to provide valid credentials.
+
+3. Biometry Lockout
+4. Biometry Not Available
+5. Biometry Not Enrolled
+6. Passcode Not Set
+7. System Cancel
+8. User Cancel
+9. User Fallback
+
+
+And, these cases are handled under enum in LocalAuthentication.swift,
 ```swift
 
 enum AuthenticationError {
