@@ -1,0 +1,141 @@
+class ImageGateway {
+    
+    func request(_ imagePath: URL, onCompletion: @escaping (_ image: UIImage?, _ error: Error?) -> ()) {
+        
+        // If Image is in Cache
+        if let cacheData: NSData = CacheGateway.instance.get(key: imagePath.absoluteString), let imageData = cacheData as Data?  {
+            
+            if let cachedImage = UIImage(data: imageData) {
+                
+                print("Image from Cache for Key : \(imagePath.absoluteString)") //FIXME
+                
+                //onSuccess
+                onCompletion(cachedImage, nil)
+            }
+        }
+        
+        // If Image in Documents Directory
+        if let imageNameSavedInDocuments = getImageName(imagePath: imagePath) {
+            if let savedImage = self.getFromDocuments(imageUrl: imageNameSavedInDocuments) {
+                
+                // Has Image in Documnets Directory
+                onCompletion(savedImage, nil)
+            }
+        }
+        
+        // Else, Request from Network
+        let session = URLSession(configuration: .ephemeral)
+        session.dataTask(with: imagePath) { (data, response, error) in
+            
+            guard error == nil else {
+                
+                //onError
+                DispatchQueue.main.async {
+                    onCompletion(nil, error)
+                }
+                return
+            }
+            
+            if let imageResponse = response as? HTTPURLResponse {
+                
+                guard imageResponse.statusCode == 200 else {
+                    
+                    // onFailure
+                    DispatchQueue.main.async {
+                        onCompletion(nil, AppError.failedWhileDownloadingImage)
+                    }
+                    return
+                }
+                
+                if let imageData = data, let actualImage = UIImage(data: imageData) {
+                    
+                    // Persist into Cache
+                    CacheGateway.instance.set(key: imagePath.absoluteString, value: imageData as NSData)
+                    
+                    // Persist into Sandbox Docuemnts Directory
+                    if let savedImageName = self.getImageName(imagePath: imagePath) {
+                     let hasSaved = self.saveInDocuments(image: actualImage, imageName: savedImageName)
+                        print("Has Saved in Documents : \(hasSaved)")
+                    }
+                    
+                    print("Image from Network for URL : \(imagePath.absoluteString)") //FIXME
+                    
+                    //onSuccess
+                    DispatchQueue.main.async {
+                        onCompletion(actualImage, nil)
+                    }
+                    
+                }
+                
+            }
+            
+            }.resume()
+        
+    }
+    
+}
+
+// Read-Write in Document Directory
+extension ImageGateway {
+    
+    func getImageName(imagePath: URL) -> String? {
+        
+        let absoultePath = imagePath.absoluteString
+        let listOfNames = absoultePath.split(separator: "/")
+        if listOfNames.count > 4 {
+            if let actualName = listOfNames[4].split(separator: ".").first {
+                return String(actualName)
+            }
+        }
+        
+        return nil
+    }
+    
+    /// Get Directory Path
+    ///
+    /// - Returns: URL Optional
+    func documentDirectoryPath() -> URL? {
+        return FileManager.default.urls(for: .documentDirectory, in: .allDomainsMask).first
+    }
+    
+    /// Save Image in Sandbox Documents Directory
+    ///
+    /// - Parameters:
+    ///   - image: UIImage which you want to save
+    ///   - imagePath: Absoulte Path which you got from API
+    /// - Returns: has successfully saved or not in BOOL
+    func saveInDocuments(image: UIImage, imageName: String) -> Bool {
+        
+        if let imageRepresentationData = UIImagePNGRepresentation(image) {
+            if var documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+                documentPath.appendPathComponent("\(imageName).png")
+                
+                print("Saving Documents Path : \(documentPath.absoluteString)")
+                if let _  = try? imageRepresentationData.write(to: documentPath) {
+                    return true
+                }
+                return false
+            }
+        }
+        return false
+    }
+    
+    
+    /// Get Image From Sandbox Document Directory
+    ///
+    /// - Parameter imageUrl: ImageURL as, we have named as its absolute URL
+    /// - Returns: UIImage Optional.
+    func getFromDocuments(imageUrl: String) -> UIImage? {
+        
+        if var documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            documentPath.appendPathComponent("\(imageUrl).png")
+            
+            print("Trying to Fetch Image from \(documentPath.absoluteString)")
+            if let imageData = try? Data(contentsOf: documentPath) {
+                return UIImage(data: imageData)
+            }
+        }
+        return nil
+    }
+    
+}
