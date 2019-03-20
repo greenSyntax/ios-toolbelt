@@ -43,26 +43,42 @@ extension UIView {
     }
     
     
-    /// Add constraint with varargs
-    ///
-    /// - Parameters:
-    ///   - subview: subview to be added
-    ///   - constants: constants in following sequence: `leading, top, trailing, bottom, width, height`
-    public func addSubview(_ subview: UIView, constants: CGFloat...) {
-        addSubview(subview, constraints: [
-            equal(\UIView.leadingAnchor, constant: constants[safe: 0] ?? 0),
-            equal(\UIView.topAnchor, constant: constants[safe: 1] ?? 0),
-            equal(\UIView.trailingAnchor, constant: -(constants[safe: 2] ?? 0)),
-            equal(\UIView.bottomAnchor, constant: -(constants[safe: 3] ?? 0))
-        ])
+    public func addSubview(
+        _ subview: UIView,
+        constants leading: CGFloat? = nil,
+        _ top: CGFloat? = nil,
+        _ trailing: CGFloat? = nil,
+        _ bottom: CGFloat? = nil,
+        _ width: CGFloat? = nil,
+        _ height: CGFloat? = nil) {
         
-        if let width = constants[safe: 4] {
-            addConstraint(equal(\UIView.widthAnchor, constant: width)(subview, self))
+        var constraints: [Constraint] = []
+        
+        if let leading = leading {
+            constraints.append(equal(\UIView.leadingAnchor, constant: leading))
         }
         
-        if let height = constants[safe: 5] {
-            addConstraint(equal(\UIView.heightAnchor, constant: height)(subview, self))
+        if let top = top {
+            constraints.append(equal(\UIView.topAnchor, constant: top))
         }
+        
+        if let trailing = trailing {
+            constraints.append(equal(\UIView.trailingAnchor, constant: -trailing))
+        }
+        
+        if let bottom = bottom {
+            constraints.append(equal(\UIView.bottomAnchor, constant: -bottom))
+        }
+        
+        if let width = width {
+            constraints.append(equal(\UIView.widthAnchor, constant: width))
+        }
+        
+        if let height = height {
+            constraints.append(equal(\UIView.heightAnchor, constant: height))
+        }
+        
+        addSubview(subview, constraints: constraints)
     }
 }
 
